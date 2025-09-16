@@ -2,9 +2,7 @@ import {React,useState} from 'react'
 
 function ToDoList(props) {
     let allTasks=props.tasks?props.tasks:[]
-    console.log("taskList",props.tasks);
     const sortedTasks=[...allTasks].sort((a,b)=>a.done - b.done)
-    console.log("sortedTasks",sortedTasks);
     
     return (
     <div>
