@@ -8,7 +8,6 @@ function ToDoForm(props) {
 
     const formSubmitHandler=(values,{resetForm})=>{
         props.recieveTask(values)
-       
         resetForm()
     }
   return (

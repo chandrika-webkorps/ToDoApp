@@ -1,8 +1,9 @@
 
 import ToDoForm from './components/ToDoForm'
 import ToDoList from './components/ToDoList'
-import { useState,Fragment} from 'react'
+import { useState,Fragment,createContext} from 'react'
 
+export const TodoContext=createContext();
 function App() {
   const[taskList,setTaskList]=useState([])
   const onRecievingTask=(task)=>{
@@ -21,7 +22,7 @@ function App() {
   return (
     <Fragment>
     <ToDoForm recieveTask={onRecievingTask}/>
-    <ToDoList tasks={taskList} onToggleDone={toggleTaskDone}/>
+    <TodoContext.Provider value={{taskList,toggleTaskDone}}>{<ToDoList/>}</TodoContext.Provider>
     </Fragment>
   )
 }

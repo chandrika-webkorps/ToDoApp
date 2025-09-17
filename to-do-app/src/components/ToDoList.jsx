@@ -1,7 +1,8 @@
-import {React,useState} from 'react'
-
-function ToDoList(props) {
-    let allTasks=props.tasks?props.tasks:[]
+import { useContext } from 'react'
+import {TodoContext} from '../App'
+function ToDoList() {
+  const ctx=useContext(TodoContext)
+    let allTasks=ctx.taskList?ctx.taskList:[]
     const sortedTasks=[...allTasks].sort((a,b)=>a.done - b.done)
     
     return (
@@ -14,7 +15,7 @@ function ToDoList(props) {
                 <p className={`${task.done?"text-green-700 line-through":"text-white"} m-4`}>{task.description}</p>
                 <button 
                 type='button' className='bg-gray-500 text-white px-4 py-2 rounded m-4 shadow-md'
-                onClick={()=>props.onToggleDone(task.id)}>{task.done?"Marked Done":"Mark As Done"}
+                onClick={()=>ctx.toggleTaskDone(task.id)}>{task.done?"Marked Done":"Mark As Done"}
                 </button>
                </div>
             </li>
