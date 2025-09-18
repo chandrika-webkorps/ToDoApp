@@ -6,12 +6,12 @@ import { useTodoStore } from './store/to-do-state';
 
 export const TodoContext=createContext();
 function App() {
-  const{taskList,recieveTask,toggleTasks}=useTodoStore()
+  const{taskList,recieveTask,toggleTasks,deleteTask}=useTodoStore()
    
   return (
     <Fragment>
     <ToDoForm recieveTask={recieveTask}/>
-    <TodoContext.Provider value={{taskList,toggleTasks}}>{<ToDoList/>}</TodoContext.Provider>
+    <TodoContext.Provider value={{taskList,toggleTasks,deleteTask}}>{<ToDoList/>}</TodoContext.Provider>
     </Fragment>
   )
 }
