@@ -21,5 +21,7 @@ export const useTodoStore=create((set)=>({
 
    updateTask:(updatedTask)=>set((state)=>({taskList:state.taskList.map((task)=>task.id===updatedTask.id?updatedTask:task),
     taskToEdit:null
-   }))
+   })),
+
+   updateTaskList:(newList)=>set({taskList:newList})
 }))
