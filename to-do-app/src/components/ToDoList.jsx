@@ -15,7 +15,7 @@ function ToDoList() {
                 <p className={`${task.done?"text-green-700 line-through":"text-white"} m-4`}>{task.description}</p>
                 <button 
                 type='button' className='bg-gray-500 text-white px-4 py-2 rounded m-4 shadow-md'
-                onClick={()=>ctx.toggleTaskDone(task.id)}>{task.done?"Marked Done":"Mark As Done"}
+                onClick={()=>ctx.toggleTasks(task.id)}>{task.done?"Marked Done":"Mark As Done"}
                 </button>
                </div>
             </li>

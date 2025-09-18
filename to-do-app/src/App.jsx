@@ -1,28 +1,17 @@
 
 import ToDoForm from './components/ToDoForm'
 import ToDoList from './components/ToDoList'
-import { useState,Fragment,createContext} from 'react'
+import { Fragment,createContext} from 'react'
+import { useTodoStore } from './store/to-do-state';
 
 export const TodoContext=createContext();
 function App() {
-  const[taskList,setTaskList]=useState([])
-  const onRecievingTask=(task)=>{
-    setTaskList((prevTaskList)=> [...prevTaskList,{...task,done:false,id:Date.now()}])
-  }
- 
-  //setting tasks as done
-  const toggleTaskDone=(taskId)=>{
-    setTaskList((prevTasks)=>{
-      return prevTasks.map((task)=>task.id===taskId?{...task, done:!(task.done)}:task)
-    })
-    
-  }
-  
-  
+  const{taskList,recieveTask,toggleTasks}=useTodoStore()
+   
   return (
     <Fragment>
-    <ToDoForm recieveTask={onRecievingTask}/>
-    <TodoContext.Provider value={{taskList,toggleTaskDone}}>{<ToDoList/>}</TodoContext.Provider>
+    <ToDoForm recieveTask={recieveTask}/>
+    <TodoContext.Provider value={{taskList,toggleTasks}}>{<ToDoList/>}</TodoContext.Provider>
     </Fragment>
   )
 }
