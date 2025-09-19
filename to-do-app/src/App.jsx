@@ -7,6 +7,7 @@ import { useTodoStore } from './store/to-do-state';
 export const TodoContext=createContext();
 function App() {
   const{taskList,recieveTask,toggleTasks,deleteTask}=useTodoStore()
+   console.log("App Rendered");
    
   return (
     <Fragment>
