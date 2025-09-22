@@ -30,7 +30,6 @@ const addTask=async(req,res)=>{
 
 const toggleTask=async(req,res)=>{
     const{id,done}=req.body
-    console.log(id,done);
     
     try{
         let jsonData=await fs.readFile(filePath,"utf-8")
