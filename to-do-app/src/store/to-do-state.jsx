@@ -1,10 +1,12 @@
 import {create} from 'zustand';
 
-export const useTodoStore=create((set)=>({
+export const useTodoStore=create((set,get)=>({
     taskList:[], taskToEdit:null,
 
     //adding new task
-    recieveTask:(task)=>set((state)=>({taskList:[...state.taskList,{...task,done:false,id:Date.now()}]})),
+    recieveTask:(task)=>set((state)=>({
+        taskList:[...state.taskList,task]
+    })),
 
     //setting tasks as done
     toggleTasks:(taskId)=>set((state)=>(
@@ -23,5 +25,6 @@ export const useTodoStore=create((set)=>({
     taskToEdit:null
    })),
 
-   updateTaskList:(newList)=>set({taskList:newList})
+   updateTaskList:(newList)=>set({taskList:newList}),
+   setTaskList:(taskList)=>set(()=>({taskList:taskList}))
 }))

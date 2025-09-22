@@ -1,6 +1,8 @@
-import {React,Fragment, use, useEffect,useState} from 'react'
+import {React,Fragment} from 'react'
 import {Form,Field,Formik} from "formik"
 import { useTodoStore } from '../store/to-do-state'
+import axios from 'axios'
+const BASE_URL="http://localhost:3000"
 
 function ToDoForm(props) {
   const{updateTask,taskToEdit}=useTodoStore()
@@ -11,12 +13,22 @@ function ToDoForm(props) {
     }
 
 
-    const formSubmitHandler=(values,{resetForm})=>{
+    const formSubmitHandler=async(values,{resetForm})=>{
         if(taskToEdit){
-         updateTask({...taskToEdit,...values})
+          try{
+            await axios.put(`${BASE_URL}/api/edit-task/${taskToEdit.id}`,{...taskToEdit,...values})
+            updateTask({...taskToEdit,...values})
+          }catch(err){}
         }else{
-          props.recieveTask(values)
-
+          const valueWithId={...values,id:Date.now(),done:false}
+          props.recieveTask(valueWithId)
+          try{
+            const res=await axios.post(`${BASE_URL}/api/new-task`,valueWithId)
+            console.log(res);
+          }catch(err){
+            console.log(err);
+          }
+          
         }
         resetForm()
     }
