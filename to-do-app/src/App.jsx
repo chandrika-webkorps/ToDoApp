@@ -3,8 +3,11 @@ import ToDoForm from './components/ToDoForm'
 import ToDoList from './components/ToDoList'
 import { Fragment,createContext, useEffect} from 'react'
 import { useTodoStore } from './store/to-do-state';
+import {BrowserRouter,Route,Routes} from 'react-router-dom'
 import axios from 'axios';
-const BASE_URL="http://localhost:3000"
+import LoginForm from './components/LoginForm';
+import SignupForm from "./components/SignupForm"
+const BASE_URL="http://localhost:8080"
 export const TodoContext=createContext();
 function App() {
   let{taskList,recieveTask,toggleTasks,deleteTask,setTaskList}=useTodoStore()
@@ -22,10 +25,24 @@ function App() {
   },[])
    
   return (
+    <BrowserRouter>
     <Fragment>
-    <ToDoForm recieveTask={recieveTask}/>
-    <TodoContext.Provider value={{taskList,toggleTasks,deleteTask}}>{<ToDoList/>}</TodoContext.Provider>
+    <Routes>
+      <Route path="/" element={<SignupForm/>}/>
+      <Route path="/login" element={<LoginForm />} />
+   
+      <Route path="/todo" element={
+        <TodoContext.Provider value={{taskList,toggleTasks,deleteTask}}>
+        <ToDoForm recieveTask={recieveTask}/>
+          {<ToDoList/>}
+          </TodoContext.Provider>
+        }
+          />
+
+    </Routes>
     </Fragment>
+
+    </BrowserRouter>
   )
 }
 

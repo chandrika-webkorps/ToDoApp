@@ -1,6 +1,15 @@
 import type { Request, Response } from 'express'
-import path from "path"
+import * as path from "path"
 import * as fs from "fs/promises"
+import { fileURLToPath } from 'url'
+
+
+function getDirname(importMetaUrl:string){
+    const filename=fileURLToPath(importMetaUrl)
+    return path.dirname(filename)
+}
+
+const __dirname=getDirname(import.meta.url)
 const filePath=path.join(__dirname, '..',"ToDo.json")
 type Task={
     title:string,
@@ -68,8 +77,10 @@ export const deleteTask=async(req:Request,res:Response)=>{
         const jsonData=await fs.readFile(filePath,"utf-8")
         const parsedData:Task[]=JSON.parse(jsonData)
         const dataAfterDelete:Task[]=parsedData.filter((task)=>String(task.id)===String(id))
-        await fs.writeFile
+        await fs.writeFile(filePath,JSON.stringify(dataAfterDelete,null,2),"utf-8")
     }catch(err){
-
+        console.log("Error deleting task: ",err);
+        return res.status(500).json({message:"Error deleting task from todos ",details:err})
+        
     }
 }

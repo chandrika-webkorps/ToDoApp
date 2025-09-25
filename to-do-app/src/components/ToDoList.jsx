@@ -2,7 +2,7 @@ import { useContext,useRef} from 'react'
 import {TodoContext} from '../App'
 import { useTodoStore } from '../store/to-do-state'
 import axios from 'axios'
-const BASE_URL="http://localhost:3000"
+const BASE_URL="http://localhost:8080"
 function ToDoList() {
   const ctx=useContext(TodoContext)
   const {setTaskToEdit,updateTaskList}=useTodoStore()
