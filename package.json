@@ -1,0 +1,21 @@
+{
+  "name": "to-do-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"cd server/dist && node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chandrika-webkorps/ToDoApp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chandrika-webkorps/ToDoApp/issues"
+  },
+  "homepage": "https://github.com/chandrika-webkorps/ToDoApp#readme"
+}

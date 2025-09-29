@@ -28,4 +28,4 @@ const todoSchema=new Schema({
     }
 })
 
-export const UserModel=mongoose.model<ITodo>("Todo",todoSchema)
+export const TodoModel=mongoose.model<ITodo>("Todo",todoSchema)
