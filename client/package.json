@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start-client": "vite",
+    "dev": "vite",
     "build": "vite build && (cd ../backend && npm install)",
     "lint": "eslint .",
     "preview": "vite preview"

@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "set NODE_OPTIONS=--experimental-vm-modules && jest",
-    "start": "nodemon dist/server.js",
+    "start": "node dist/server.js",
     "start-server": "node dist/server.js",
     "watch": "tsc --watch"
   },
