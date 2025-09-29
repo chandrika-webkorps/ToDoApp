@@ -6,7 +6,7 @@ const BASE_URL="http://localhost:8080"
 function ToDoList() {
   const token = localStorage.getItem('token');
   const ctx=useContext(TodoContext)
-  const {setTaskToEdit,updateTaskList,taskToEdit}=useTodoStore()
+  const {setTaskToEdit,updateTaskList}=useTodoStore()
     let allTasks=ctx.taskList?ctx.taskList:[]
     const sortedTasks=[...allTasks].sort((a,b)=>a.done - b.done)
     const dragTask=useRef(0)
