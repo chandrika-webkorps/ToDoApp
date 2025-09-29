@@ -3,6 +3,6 @@ import {Request} from "express"
 
 declare module "express-serve-static-core" {
   interface Request {
-    user: string | (JwtPayload & {id:string});
+    user?: string | (JwtPayload & {id?:string});
   }
 }
