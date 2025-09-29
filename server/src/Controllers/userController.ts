@@ -1,4 +1,4 @@
-import {generateToken} from "../../src/middlewares/jwtAuth.js"
+import {generateToken} from "../middlewares/jwtAuth.js"
 import type { Request,Response } from "express"
 import { UserModel } from "../Models/userModel.js"
 import bcrypt from "bcrypt"
