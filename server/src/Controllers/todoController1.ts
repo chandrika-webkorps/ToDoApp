@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express'
-import TodoModel from "../Models/todoModel.js"
-import UserModel from "../Models/userModel.js"
+import {TodoModel} from "../Models/todoModel.js"
+import {UserModel} from "../Models/userModel.js"
 import mongoose from 'mongoose'
 
 type Task={
@@ -11,6 +11,9 @@ type Task={
 }
 export const addTask=async(req:Request,res:Response)=>{
    const values:Task=req.body
+   if (!req.user || typeof req.user === "string") {
+    return res.status(401).json({ message: "Unauthorized" });
+}
    const userId :any= new mongoose.Types.ObjectId(req.user.id as string)
    const user:any=await UserModel.findById(userId)
    if(!user){
@@ -34,7 +37,10 @@ export const addTask=async(req:Request,res:Response)=>{
 }
 
 export const toggleTask = async (req:Request, res:Response) => {
-    const { id, done } = req.body as {id:any, done:Boolean};
+    if (!req.user || typeof req.user === "string") {
+    return res.status(401).json({ message: "Unauthorized" });
+}
+    const { id, done } = req.body as {id:any, done:boolean};
     const userId=new mongoose.Types.ObjectId(req.user.id as string)
    
     const user=await UserModel.findById(userId)
@@ -42,8 +48,11 @@ export const toggleTask = async (req:Request, res:Response) => {
         return res.status(404).json({message:"User not found! "})
     }
     try {
-        const taskToToggle=await TodoModel.findById(id)       
-        taskToToggle.done=done;
+        const taskToToggle=await TodoModel.findById(id)     
+        if(!taskToToggle){
+           return res.status(404).json({message:"Task not found"})
+        }  
+        taskToToggle.done=done
         await taskToToggle.save()
         return res.status(200).json({ message: "Updated task list is: ", taskToToggle});
     }
@@ -52,6 +61,9 @@ export const toggleTask = async (req:Request, res:Response) => {
     }
 };
 export const getTasks = async (req:Request, res:Response) => {
+    if (!req.user || typeof req.user === "string") {
+    return res.status(401).json({ message: "Unauthorized" });
+}
     const userId=new mongoose.Types.ObjectId(req.user.id)  
     const user=await UserModel.findById(userId)
      if(!user){
@@ -68,6 +80,7 @@ export const getTasks = async (req:Request, res:Response) => {
 
 export const deleteTask = async (req:Request, res:Response) => {
     const { id } = req.params;
+    
     try {
         const taskToDelete=await TodoModel.findByIdAndDelete(id)       
         if(!taskToDelete){
@@ -82,6 +95,9 @@ export const deleteTask = async (req:Request, res:Response) => {
 export const editTask=async(req:Request,res:Response)=>{
     const {id}=req.params
     const values=req.body
+    if (!req.user || typeof req.user === "string") {
+    return res.status(401).json({ message: "Unauthorized" });
+}
       
    const userId=new mongoose.Types.ObjectId(req.user.id as string)
     

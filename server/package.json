@@ -7,6 +7,7 @@
   "scripts": {
     "test": "set NODE_OPTIONS=--experimental-vm-modules && jest",
     "start": "node dist/server.js",
+    "build":"tsc",
     "start-server": "node dist/server.js",
     "watch": "tsc --watch"
   },
