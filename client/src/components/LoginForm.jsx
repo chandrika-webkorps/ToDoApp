@@ -3,7 +3,7 @@ import {Form,Field,Formik} from "formik"
 import {useNavigate} from 'react-router-dom'
 import { useTodoStore } from '../store/to-do-state'
 import axios from "axios"
-const BASE_URL="http://localhost:8080"
+const BASE_URL=import.meta.env.VITE_API_URL
 function LoginForm() {
   const{setToken}=useTodoStore()
   const[Error,setError]=useState("")
