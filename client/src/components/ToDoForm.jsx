@@ -3,7 +3,7 @@ import {Form,Field,Formik} from "formik"
 import { useTodoStore } from '../store/to-do-state'
 import axios from 'axios'
 import { useEffect } from 'react'
-const BASE_URL="http://localhost:8080"
+const BASE_URL=import.meta.env.VITE_API_URL
 
 function ToDoForm(props) {
   const{updateTask,taskToEdit}=useTodoStore()

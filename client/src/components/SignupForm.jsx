@@ -2,7 +2,7 @@ import {React,Fragment,useState} from 'react'
 import {Form,Field,Formik} from "formik"
 import {useNavigate} from 'react-router-dom'
 import axios from "axios"
-const BASE_URL="http://localhost:8080"
+const BASE_URL=import.meta.env.VITE_API_URL
 function SignupForm() {
     const[Error,setError]=useState("")
     const navigate=useNavigate()
