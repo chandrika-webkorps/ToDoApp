@@ -91,8 +91,10 @@ export const deleteTask = async (req, res) => {
 
 export const editTask=async(req,res)=>{
     const {id}=req.params
-    const {values}=req.body
+    const values=req.body
     console.log("task id: ",id);
+    console.log("Values: ",values);
+    
     
    const userId=new mongoose.Types.ObjectId(req.user.id)
     console.log("userID: ",userId);
@@ -104,8 +106,14 @@ export const editTask=async(req,res)=>{
     try{
          const taskToEdit=await ToDoModel.findById(id)
          console.log("Task to edit is: ",taskToEdit);
+         if(!taskToEdit){
+            return res.status(404).json({Message:"Task not found"})
+         }
+         taskToEdit.title=values.title
+         taskToEdit.description=values.description
+         await taskToEdit.save()
         
-         return res.status(200).json({message:"Task edited successfully"})
+         return res.status(200).json({message:"Task edited successfully",updatedTask:taskToEdit})
     }catch(err){
         console.log("Error Editing task: ",err);
         

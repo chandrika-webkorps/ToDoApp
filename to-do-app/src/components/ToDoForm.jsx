@@ -17,12 +17,12 @@ function ToDoForm(props) {
      let token= localStorage.getItem('token')
         if(taskToEdit){
           try{
-            await axios.put(`${BASE_URL}/api/edit-task/${taskToEdit._id}`,{values},{
+           const editResponse= await axios.put(`${BASE_URL}/api/edit-task/${taskToEdit._id}`,values,{
               headers:{
                 Authorization:`Bearer ${token}`
               }
             })
-            updateTask({...taskToEdit,...values})
+            updateTask(editResponse.data.updatedTask)
           }catch(err){}
         }else{
           const valueWithId={...values,done:false}
@@ -35,11 +35,11 @@ function ToDoForm(props) {
             props.recieveTask(res.data.newTask)
             console.log(res);
           }catch(err){
+            console.log("Error adding a new Task: ",err);
           }
           
         }
         resetForm()
-        console.log(err);
     }
 
     
