@@ -1,7 +1,7 @@
 import {create} from 'zustand';
 
 export const useTodoStore=create((set,get)=>({
-    taskList:[], taskToEdit:null,
+    taskList:[], taskToEdit:null, token:null,
 
     //adding new task
     recieveTask:(task)=>set((state)=>({
@@ -10,12 +10,12 @@ export const useTodoStore=create((set,get)=>({
 
     //setting tasks as done
     toggleTasks:(taskId)=>set((state)=>(
-        {taskList:state.taskList.map((task)=>task.id===taskId?{...task,done:!(task.done)}:task
+        {taskList:state.taskList.map((task)=>task._id===taskId?{...task,done:!(task.done)}:task
     )})),
 
     //deleting a task
     deleteTask:(taskId)=>set((state)=>({
-        taskList:[...state.taskList.filter((task)=>task.id!==taskId)]
+        taskList:[...state.taskList.filter((task)=>task._id!==taskId)]
     })),
 
     //editing a task

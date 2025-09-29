@@ -1,4 +1,4 @@
-import jwt, {} from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
 export const jwtAuthMiddleware = (req, res, next) => {

@@ -2,6 +2,7 @@ import {React,Fragment} from 'react'
 import {Form,Field,Formik} from "formik"
 import { useTodoStore } from '../store/to-do-state'
 import axios from 'axios'
+import { useEffect } from 'react'
 const BASE_URL="http://localhost:8080"
 
 function ToDoForm(props) {
@@ -11,26 +12,34 @@ function ToDoForm(props) {
         title:taskToEdit?taskToEdit.title:"",
         description:taskToEdit?taskToEdit.description:""
     }
-
-
+ 
     const formSubmitHandler=async(values,{resetForm})=>{
+     let token= localStorage.getItem('token')
         if(taskToEdit){
           try{
-            await axios.put(`${BASE_URL}/api/edit-task/${taskToEdit.id}`,{...taskToEdit,...values})
+            await axios.put(`${BASE_URL}/api/edit-task/${taskToEdit._id}`,{values},{
+              headers:{
+                Authorization:`Bearer ${token}`
+              }
+            })
             updateTask({...taskToEdit,...values})
           }catch(err){}
         }else{
-          const valueWithId={...values,id:Date.now(),done:false}
-          props.recieveTask(valueWithId)
+          const valueWithId={...values,done:false}
           try{
-            const res=await axios.post(`${BASE_URL}/api/new-task`,valueWithId)
+            const res=await axios.post(`${BASE_URL}/api/new-task`,valueWithId,{
+              headers:{
+                Authorization:`Bearer ${token}`
+              }
+            })
+            props.recieveTask(res.data.newTask)
             console.log(res);
           }catch(err){
-            console.log(err);
           }
           
         }
         resetForm()
+        console.log(err);
     }
 
     

@@ -9,7 +9,7 @@ export const addUser = async (req, res) => {
         }
         const existingUser = await UserModel.findOne({ email: values.email });
         if (existingUser) {
-            return res.status(200).json({ message: "User already exists, please login", existingUser });
+            return res.status(409).json({ message: "User already exists, please login", existingUser });
         }
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(values.password, saltRounds);
@@ -19,8 +19,6 @@ export const addUser = async (req, res) => {
             password: hashedPassword
         });
         await newUser.save();
-        console.log("newUser: ",newUser);
-        
         return res.status(200).json({ message: "New user created", newUser });
     }
     catch (err) {

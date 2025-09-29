@@ -14,8 +14,15 @@ function App() {
   
   useEffect(()=>{
     const fetchTasks=async()=>{
+      const token=localStorage.getItem("token")
       try{
-          const res=await axios.get(`${BASE_URL}/api/get-tasks`)
+          const res=await axios.get(`${BASE_URL}/api/get-tasks`,{
+            headers:{
+              Authorization:`Bearer ${token}`
+            }
+          })
+          console.log("res: ",res.data);
+          
           setTaskList(res.data.allTasks)          
       }catch(err){
           console.log("Error fetching tasks",err);

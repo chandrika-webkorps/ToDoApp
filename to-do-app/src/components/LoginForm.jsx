@@ -1,9 +1,11 @@
 import {React,Fragment,useState} from 'react'
 import {Form,Field,Formik} from "formik"
 import {useNavigate} from 'react-router-dom'
+import { useTodoStore } from '../store/to-do-state'
 import axios from "axios"
 const BASE_URL="http://localhost:8080"
 function LoginForm() {
+  const{setToken}=useTodoStore()
   const[Error,setError]=useState("")
     const navigate=useNavigate()
     const initialValues={
@@ -15,6 +17,11 @@ function LoginForm() {
         const loggedInUser=await axios.post(`${BASE_URL}/login-user`,values)
         console.log("new user created: ",loggedInUser);
         console.log(values);
+        if(loggedInUser.data.token) {
+          console.log('token', loggedInUser.data.token);
+          
+      localStorage.setItem('token', loggedInUser.data.token);
+    }
         navigate("/todo")
         resetForm()
 
