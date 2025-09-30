@@ -7,7 +7,7 @@ import {BrowserRouter,Route,Routes} from 'react-router-dom'
 import axios from 'axios';
 import LoginForm from './components/LoginForm';
 import SignupForm from "./components/SignupForm"
-const BASE_URL="http://localhost:8080"
+const BASE_URL=import.meta.env.VITE_API_URL
 export const TodoContext=createContext();
 function App() {
   let{taskList,recieveTask,toggleTasks,deleteTask,setTaskList}=useTodoStore()
