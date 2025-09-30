@@ -22,6 +22,7 @@ export const addTask = async (req, res) => {
         return res.status(200).json({ message: "New Task added", newTask });
     }
     catch (err) {
+           console.log("Error in adding new task: ",err);
            
         return res.status(500).json({ message: "Internal Server Error" });
     }

@@ -11,14 +11,19 @@ type Task={
 }
 export const addTask=async(req:Request,res:Response)=>{
    const values:Task=req.body
+   console.log("typeOf req.user: ",typeof req.user);
+   
    if (!req.user || typeof req.user === "string") {
     return res.status(401).json({ message: "Unauthorized" });
 }
+   console.log("Req.user: ",req.user);
+
    const userId :any= new mongoose.Types.ObjectId(req.user.id as string)
    const user:any=await UserModel.findById(userId)
    if(!user){
-    return res.status(404).json({message:"User not found"})
-   }
+       return res.status(404).json({message:"User not found"})
+    }
+    console.log("user found: ",user);
    try{
     if(!values.title||!values.description){
          return res.status(400).json({message:"Title or description missing"})
