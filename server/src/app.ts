@@ -10,7 +10,7 @@ import authRoute from "./Routes/authRoute.js"
 app.use(express.json())
 // const allowedOrigins=["https://todoapp-2-1.onrender.com/login","http://localhost:5173"]
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: "https://todoapp-2-1.onrender.com",
     credentials:true
 }));
 app.use("/",authRoute)
