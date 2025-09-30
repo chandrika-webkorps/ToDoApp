@@ -11,19 +11,16 @@ type Task={
 }
 export const addTask=async(req:Request,res:Response)=>{
    const values:Task=req.body
-   console.log("typeOf req.user: ",typeof req.user);
-   
+      
    if (!req.user || typeof req.user === "string") {
     return res.status(401).json({ message: "Unauthorized" });
 }
-   console.log("Req.user: ",req.user);
-
+ 
    const userId :any= new mongoose.Types.ObjectId(req.user.id as string)
    const user:any=await UserModel.findById(userId)
    if(!user){
        return res.status(404).json({message:"User not found"})
     }
-    console.log("user found: ",user);
    try{
     if(!values.title||!values.description){
          return res.status(400).json({message:"Title or description missing"})
@@ -75,7 +72,7 @@ export const getTasks = async (req:Request, res:Response) => {
         return res.status(404).json({message:"User not found! "})
     }
     try {
-        const allTasks=await TodoModel.find({userId})
+        const allTasks=await TodoModel.find({userId:userId})
         return res.status(200).json({ Message: "Fetching all tasks: ", allTasks });
     }
     catch (err) {
@@ -85,7 +82,6 @@ export const getTasks = async (req:Request, res:Response) => {
 
 export const deleteTask = async (req:Request, res:Response) => {
     const { id } = req.params;
-    
     try {
         const taskToDelete=await TodoModel.findByIdAndDelete(id)       
         if(!taskToDelete){
@@ -103,7 +99,6 @@ export const editTask=async(req:Request,res:Response)=>{
     if (!req.user || typeof req.user === "string") {
     return res.status(401).json({ message: "Unauthorized" });
 }
-      
    const userId=new mongoose.Types.ObjectId(req.user.id as string)
     
     const user=await UserModel.findById(userId)
@@ -112,18 +107,14 @@ export const editTask=async(req:Request,res:Response)=>{
     }
     try{
          const taskToEdit=await TodoModel.findById(id)
-         console.log("Task to edit is: ",taskToEdit);
          if(!taskToEdit){
             return res.status(404).json({Message:"Task not found"})
          }
          taskToEdit.title=values.title
          taskToEdit.description=values.description
          await taskToEdit.save()
-        
          return res.status(200).json({message:"Task edited successfully",updatedTask:taskToEdit})
     }catch(err){
-        console.log("Error Editing task: ",err);
-        
         return res.status(500).json({message:"Error editing task: ",err})
     }
 }
