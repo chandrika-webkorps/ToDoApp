@@ -5,7 +5,7 @@ export interface ITodo extends Document{
     title:string,
     description:string,
     done:boolean,
-    user:mongoose.Types.ObjectId
+    userId:mongoose.Types.ObjectId
 }
 const todoSchema=new Schema({
     title:{
@@ -21,7 +21,7 @@ const todoSchema=new Schema({
         required:true,
         default:false
     },
-    user:{
+    userId:{
         type:Schema.Types.ObjectId,
         ref:"User",
         required:true

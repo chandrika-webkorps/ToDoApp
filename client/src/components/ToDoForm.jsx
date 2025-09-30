@@ -38,7 +38,7 @@ function ToDoForm(props) {
             console.log("new task: ",res);
             props.recieveTask(res.data.newTask)
           }catch(err){
-            console.log("Error adding a new Task: ",err);
+            console.log("Error adding a new Task in frontend: ",err);
           }
           
         }
