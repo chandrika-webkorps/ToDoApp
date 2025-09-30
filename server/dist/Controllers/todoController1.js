@@ -8,7 +8,6 @@ export const addTask = async (req, res) => {
     const user=await UserModel.findById(userId)
     if(!user){
         return res.status(404).json({message:"User not found! "})
-        
     }
     try {
         if(!values.title||!values.description){
@@ -17,7 +16,7 @@ export const addTask = async (req, res) => {
         const newTask=new ToDoModel({
             title:values.title,
             description:values.description,
-            userId
+            userId:userId
         })
         await newTask.save()
         return res.status(200).json({ message: "New Task added", newTask });

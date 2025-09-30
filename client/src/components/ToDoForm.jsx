@@ -2,10 +2,11 @@ import {React,Fragment} from 'react'
 import {Form,Field,Formik} from "formik"
 import { useTodoStore } from '../store/to-do-state'
 import axios from 'axios'
-import { useEffect } from 'react'
+
 const BASE_URL=import.meta.env.VITE_API_URL
 
 function ToDoForm(props) {
+  let token= localStorage.getItem('token')
   const{updateTask,taskToEdit}=useTodoStore()
   
     const initialValues={
@@ -14,7 +15,6 @@ function ToDoForm(props) {
     }
  
     const formSubmitHandler=async(values,{resetForm})=>{
-     let token= localStorage.getItem('token')
         if(taskToEdit){
           try{
            const editResponse= await axios.put(`${BASE_URL}/api/edit-task/${taskToEdit._id}`,values,{
@@ -23,7 +23,10 @@ function ToDoForm(props) {
               }
             })
             updateTask(editResponse.data.updatedTask)
-          }catch(err){}
+          }catch(err){
+            console.log("Error in updating task: ",err);
+            
+          }
         }else{
           const valueWithId={...values,done:false}
           try{
@@ -32,8 +35,8 @@ function ToDoForm(props) {
                 Authorization:`Bearer ${token}`
               }
             })
+            console.log("new task: ",res);
             props.recieveTask(res.data.newTask)
-            console.log(res);
           }catch(err){
             console.log("Error adding a new Task: ",err);
           }
